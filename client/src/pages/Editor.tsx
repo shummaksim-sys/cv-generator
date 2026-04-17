@@ -169,14 +169,38 @@ export default function Editor() {
       const element = previewRef.current;
       if (!element) return;
 
-      // Temporarily reset transform for capture
-      const prevTransform = element.style.transform;
-      element.style.transform = 'none';
-      element.style.position = 'static';
+      // Create a clone to avoid modifying the live preview
+      const clone = element.cloneNode(true) as HTMLElement;
+      document.body.appendChild(clone);
+      clone.style.position = 'absolute';
+      clone.style.top = '-9999px';
+      clone.style.left = '-9999px';
+      clone.style.transform = 'none';
+      clone.style.width = '794px';
+      clone.style.height = '1123px';
+      
+      // Replace OKLCH colors in the clone with hex equivalents
+      const walkDOM = (node: Node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const el = node as HTMLElement;
+          // Check for OKLCH colors in inline styles and replace with fallback
+          if (el.style.backgroundColor && el.style.backgroundColor.includes('oklch')) {
+            el.style.backgroundColor = '#ffffff';
+          }
+          if (el.style.color && el.style.color.includes('oklch')) {
+            el.style.color = '#000000';
+          }
+          if (el.style.borderColor && el.style.borderColor.includes('oklch')) {
+            el.style.borderColor = '#cccccc';
+          }
+        }
+        node.childNodes.forEach(walkDOM);
+      };
+      walkDOM(clone);
 
       await new Promise(r => setTimeout(r, 150));
 
-      const canvas = await html2canvas(element, {
+      const canvas = await html2canvas(clone, {
         scale: 2,
         useCORS: true,
         logging: false,
@@ -186,8 +210,8 @@ export default function Editor() {
         windowWidth: 794,
       });
 
-      element.style.transform = prevTransform;
-      element.style.position = 'absolute';
+      // Clean up the clone
+      document.body.removeChild(clone);
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
