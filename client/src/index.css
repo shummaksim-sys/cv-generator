@@ -148,6 +148,60 @@
   --glass-blur: blur(16px);
 }
 
+/* ===== PDF EXPORT OVERRIDE ===== */
+/* This stylesheet ensures html2canvas can render without OKLCH color errors */
+.pdf-export {
+  --background: #0f1419 !important;
+  --foreground: #edeff5 !important;
+  --card: #1a1f2e !important;
+  --card-foreground: #edeff5 !important;
+  --popover: #1a1f2e !important;
+  --popover-foreground: #edeff5 !important;
+  --primary: #4f46e5 !important;
+  --primary-foreground: #faf8ff !important;
+  --secondary: #2a2f3e !important;
+  --secondary-foreground: #cdd0dd !important;
+  --muted: #2a2f3e !important;
+  --muted-foreground: #9397a8 !important;
+  --accent: #333845 !important;
+  --accent-foreground: #edeff5 !important;
+  --destructive: #d73b3b !important;
+  --destructive-foreground: #faf8ff !important;
+  --border: rgba(255, 255, 255, 0.08) !important;
+  --input: rgba(255, 255, 255, 0.10) !important;
+  --ring: #4f46e5 !important;
+  --glass-bg: rgba(255, 255, 255, 0.04) !important;
+  --glass-bg-hover: rgba(255, 255, 255, 0.07) !important;
+  --glass-border: rgba(255, 255, 255, 0.10) !important;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.40) !important;
+}
+
+.pdf-export.light {
+  --background: #f5f7fb !important;
+  --foreground: #2d3748 !important;
+  --card: #ffffff !important;
+  --card-foreground: #2d3748 !important;
+  --popover: #ffffff !important;
+  --popover-foreground: #2d3748 !important;
+  --primary: #4f46e5 !important;
+  --primary-foreground: #faf8ff !important;
+  --secondary: #eef2f9 !important;
+  --secondary-foreground: #4a5568 !important;
+  --muted: #eef2f9 !important;
+  --muted-foreground: #718096 !important;
+  --accent: #eef2f9 !important;
+  --accent-foreground: #2d3748 !important;
+  --destructive: #c53030 !important;
+  --destructive-foreground: #faf8ff !important;
+  --border: rgba(45, 55, 72, 0.12) !important;
+  --input: rgba(45, 55, 72, 0.08) !important;
+  --ring: #4f46e5 !important;
+  --glass-bg: rgba(255, 255, 255, 0.60) !important;
+  --glass-bg-hover: rgba(255, 255, 255, 0.80) !important;
+  --glass-border: rgba(255, 255, 255, 0.70) !important;
+  --glass-shadow: 0 8px 32px rgba(45, 55, 72, 0.12) !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
